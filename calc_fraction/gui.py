@@ -10,7 +10,6 @@ class Gui(Frame):
         self.declareWidget()
         self.placeWidget()
 
-
     def declareWidget(self):
         self.integer_1 = ttk.Entry(width=5, font=15, justify=RIGHT)
         self.numerator_1 = ttk.Entry(width=5, font=15, justify=RIGHT)
@@ -19,7 +18,6 @@ class Gui(Frame):
         self.integer_2 = ttk.Entry(width=5, font=15, justify=RIGHT)
         self.numerator_2 = ttk.Entry(width=5, font=15, justify=RIGHT)
         self.denominator_2 = ttk.Entry(width=5, font=15, justify=RIGHT)
-
 
         self.sign_math_oper = ttk.Label(anchor='c', text='...', width=2, font="Arial 19")
         self.label_equal_sign = ttk.Label(anchor='c', text='=', width=2, font="Arial 19")
@@ -34,7 +32,6 @@ class Gui(Frame):
         self.fraction = self.fraction_1, self.fraction_2  # создаем многомерный кортеж с дробеми 1 и 2
 
         self.label_fields = self.label_integer, self.label_numerator, self.label_denominator
-
 
     def placeWidget(self):
         self.integer_1.grid(row=1, column=0, rowspan=2, padx=2, pady=4)

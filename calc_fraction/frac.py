@@ -1,17 +1,16 @@
-
 import random
 from tkinter import *
-from tkinter import ttk
 from tkinter import messagebox
+from tkinter import ttk
+
 from calc_fraction.gui import Gui
 
 
 class Frac:
     def __init__(self, gui):
-        self.gui = gui # объект файла gui класса Gui
-        self.generateButton() # запускаем сгенерированные кнопки
-        self.generateNumber() # создаем случайные числа для полей 1 и 2 дроби
-
+        self.gui = gui  # объект файла gui класса Gui
+        self.generateButton()  # запускаем сгенерированные кнопки
+        self.generateNumber()  # создаем случайные числа для полей 1 и 2 дроби
 
     # создание кнопок в придожении
     def generateButton(self):
@@ -19,12 +18,10 @@ class Frac:
             self.b = ttk.Button(width=7, text=value, command=lambda v=value: self.what_operation(v))
             self.b.grid(row=3, column=self.gui.operations.index(value), padx=2, pady=4)
 
-
     # распичатать полученый результат на экран
     def output_fraction(self, frac):
         for f, i in zip(self.gui.label_fields, frac):
             f["text"] = int(i)
-
 
     # отчистка полей
     def clearFields(self):
@@ -36,11 +33,9 @@ class Frac:
         self.gui.sign_math_oper["text"] = '...'
         self.gui.label_put_minus_sign["text"] = ' '
 
-
     # подстановка случайных чисел в форму
     def generateNumber(self):
         [i.insert(0, random.randint(1, 10)) for i in (*self.gui.fraction_1, *self.gui.fraction_2)]
-
 
     # проверка НОД
     def __gcd(self, a, den, i):
@@ -55,7 +50,6 @@ class Frac:
                 b -= a
         gcd = a + b
         return gcd, r
-
 
     # получаем оответ ввиде смешанной дроби
     def reduc_fraction(self, n, d):
@@ -73,7 +67,6 @@ class Frac:
                 den = 0
         return integer, num, den
 
-
     # получаем наши дроби ([1, 7, 3], [9, 2, 1])
     def both_fractions(self):
         """получаем наши дроби, возвращает ([1, 7, 3], [9, 2, 1])"""
@@ -85,14 +78,12 @@ class Frac:
                 y.append(int(self.gui.fraction[i][x].get()))
         return tuple(f)
 
-
     # реализация - приводим к неправильной, если есть целая часть
     def improper_fractions(self, i, n, d):
         '''реализация - приводим к неправильной, возвращает [(71, 7), (10, 9)]'''
         num = (i * d) + n
         den = d
         return num, den
-
 
     # реализация - приведение занаменателей обеих дробей к общему числу если они не равны
     def common_den(self, d1, d2):
@@ -101,13 +92,11 @@ class Frac:
             return d1 * d2
         return d1
 
-
     # реализация - умножаем числители обеих дробей используя множители из знаменателя
     def new_num(self, n, d, den):
         '''реализация - умножаем числители обеих дробей используя множители из знаменателя [414, 120] n = числитель, d = знаменатель, den = общий знаменатель (common_den)'''
         num = int(den / d) * n
         return num
-
 
     def what_operation(self, value):
         try:
@@ -117,7 +106,7 @@ class Frac:
                 both_frac = self.both_fractions()
 
                 # реализация - приводим к неправильной, возвращает [(71, 7), (10, 9)]
-                improper_frac =[self.improper_fractions(*both_frac[i]) for i in range(len(both_frac))]
+                improper_frac = [self.improper_fractions(*both_frac[i]) for i in range(len(both_frac))]
 
                 # реализация - приведение занаменателей обеих дробей к общему числу возвращает int
                 com_den = self.common_den(improper_frac[0][1], improper_frac[1][1])
@@ -138,7 +127,6 @@ class Frac:
                         result_num = eval('new_num[0] {0} new_num[1]'.format(value))
                     result_den = com_den
 
-
                 # умножение и деление
                 if value == '*' or value == '/':
                     if value == '*':
@@ -151,9 +139,8 @@ class Frac:
                 # преводим дробь к смешанному виду
                 result = self.reduc_fraction(result_num, result_den)
 
-
-                self.output_fraction(result) # распичатать полученого результата на экран
-                self.gui.sign_math_oper["text"] = value # распечать знак математической оперции  на экран
+                self.output_fraction(result)  # распичатать полученого результата на экран
+                self.gui.sign_math_oper["text"] = value  # распечать знак математической оперции  на экран
 
             else:
                 # отчистка полей
